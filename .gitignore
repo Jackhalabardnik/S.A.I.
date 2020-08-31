@@ -1,0 +1,9 @@
+/target/
+
+/grammar/
+
+/acoustic_model_files/
+
+/.vscode/
+
+*.code-workspace
