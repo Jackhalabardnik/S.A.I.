@@ -1,16 +1,12 @@
 use std::sync;
 
 mod julius;
-
-use julius::*;
+mod parser;
 
 fn main() {
-    let (jw_sender, jw_reciver) = sync::mpsc::channel();
+    let (julius_sender, julius_receiver) = sync::mpsc::channel();
+    let (worker_sender, _worker_reciever) = sync::mpsc::channel();
 
-    listen_and_send(jw_sender, "my_conf.jconf".to_string());
-
-    loop {
-        let result = jw_reciver.recv().unwrap();
-        println!("{}", result);
-    }
+    julius::listen_and_send(julius_sender, "my_conf.jconf".to_string());
+    parser::parse_commands(julius_receiver, worker_sender);
 }
