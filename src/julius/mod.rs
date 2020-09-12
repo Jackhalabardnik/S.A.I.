@@ -4,6 +4,7 @@ use std::sync;
 use std::thread;
 
 pub fn listen_and_send(sender: sync::mpsc::Sender<String>, conf_name: String) {
+    println!("Julius acitve!");
     thread::spawn(move || {
         let stdout = Command::new("julius")
             .arg("-C")
