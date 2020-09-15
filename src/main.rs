@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::env;
 use std::fs;
 use std::sync;
 
@@ -61,10 +62,17 @@ fn parse_config(
 }
 
 fn main() {
-    parse_config(read_config_file("sai_config".to_string()));
+    let mut args: Vec<String> = env::args().collect();
+    if args.len() != 2 {
+        panic!("SAI has to have config file...");
+    }
+
+    let ((invoking_word, sleep_word), (phases, phases_and_commands)) =
+        parse_config(read_config_file(args.pop().unwrap()));
+
     let (julius_sender, julius_receiver) = sync::mpsc::channel();
     let (worker_sender, worker_reciever) = sync::mpsc::channel();
-    let parser = Parser::new("KOMPUTER".to_string());
+    let parser = Parser::new(invoking_word, sleep_word);
 
     julius::listen_and_send(julius_sender, "j_polski.jconf".to_string());
     worker::listen_and_do(worker_reciever);

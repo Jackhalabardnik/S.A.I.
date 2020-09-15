@@ -2,12 +2,14 @@ use std::sync;
 
 pub struct Parser {
     invoking_word: String,
+    sleep_word: String,
 }
 
 impl Parser {
-    pub fn new(invoking_word: String) -> Parser {
+    pub fn new(invoking_word: String, sleep_word: String) -> Parser {
         Parser {
             invoking_word: invoking_word,
+            sleep_word: sleep_word,
         }
     }
 
@@ -35,9 +37,12 @@ impl Parser {
 
             if is_active {
                 if is_new_command {
-                    if self.contains_special_word(&command) {
+                    if self.contains_invoking_word(&command) {
                         time = std::time::Instant::now();
                         println!("SIA hears you");
+                    } else if self.contains_sleep_word(&command) {
+                        is_active = false;
+                        println!("SIA falls asleep...");
                     } else {
                         match command_output.send(command) {
                             Err(problem) => {
@@ -52,7 +57,7 @@ impl Parser {
                     println!("SIA falls asleep...");
                 }
             } else if is_new_command {
-                if self.contains_special_word(&command) {
+                if self.contains_invoking_word(&command) {
                     is_active = true;
                     println!("SIA is active!");
                     time = std::time::Instant::now();
@@ -61,8 +66,12 @@ impl Parser {
         }
     }
 
-    fn contains_special_word(&self, word: &String) -> bool {
+    fn contains_invoking_word(&self, word: &String) -> bool {
         word.contains(self.invoking_word.as_str())
+    }
+
+    fn contains_sleep_word(&self, word: &String) -> bool {
+        word.contains(self.sleep_word.as_str())
     }
 }
 
