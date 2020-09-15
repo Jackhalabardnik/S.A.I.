@@ -49,11 +49,15 @@ fn read_config_file(filename: String) -> String {
     String::from_utf8_lossy(&file_content).to_string()
 }
 
-fn parse_config(file_content: String) {
+fn parse_config(
+    file_content: String,
+) -> ((String, String), (Vec<String>, HashMap<String, String>)) {
     let mut lines = file_content.lines();
-    let important_words = lines.next().unwrap();
-    println!("Important words: {}", important_words);
-    lines.for_each(|line| println!("{}", line));
+    let control_words = lines.next().unwrap().to_string();
+    (
+        get_control_words(control_words),
+        get_command_collections(lines),
+    )
 }
 
 fn main() {
