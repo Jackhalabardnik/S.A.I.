@@ -31,7 +31,7 @@ fn panics_when_have_only_one_control_word() {
 #[test]
 fn returns_pair_of_command_collections() {
     let file_content = "A;B\nC;D\nE;B\n".to_string();
-    let vector = ["A".to_string(), "C".to_string(), "E".to_string()];
+    let vector = vec!["A".to_string(), "C".to_string(), "E".to_string()];
     let hash_map: HashMap<String, String> = [
         ("A".to_string(), "B".to_string()),
         ("C".to_string(), "D".to_string()),
@@ -86,7 +86,7 @@ fn returns_parsed_config() {
     let ((invoking_word, sleep_word), (phases, phases_and_commands)) = parse_config(file_content);
     assert_eq!(invoking_word, "A".to_string());
     assert_eq!(sleep_word, "B".to_string());
-    assert_eq!(phases, ["C".to_string(), "F".to_string()]);
+    assert_eq!(phases, vec!["C".to_string(), "F".to_string()]);
     assert_eq!(
         phases_and_commands,
         [

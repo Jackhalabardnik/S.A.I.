@@ -2,7 +2,11 @@ use super::*;
 
 #[test]
 fn test_contains_invoking_word() {
-    let parser = Parser::new("COMPUTER".to_string(), "STOP".to_string());
+    let parser = Parser::new(
+        "COMPUTER".to_string(),
+        "STOP".to_string(),
+        vec!["A".to_string()],
+    );
     assert_eq!(parser.contains_invoking_word(&"WORD".to_string()), false);
     assert_eq!(parser.contains_invoking_word(&"COMPUTER".to_string()), true);
     assert_eq!(
@@ -13,8 +17,58 @@ fn test_contains_invoking_word() {
 
 #[test]
 fn test_contains_sleep_word() {
-    let parser = Parser::new("COMPUTER".to_string(), "STOP".to_string());
+    let parser = Parser::new(
+        "COMPUTER".to_string(),
+        "STOP".to_string(),
+        vec!["A".to_string()],
+    );
     assert_eq!(parser.contains_sleep_word(&"WORD".to_string()), false);
     assert_eq!(parser.contains_sleep_word(&"STOP".to_string()), true);
     assert_eq!(parser.contains_sleep_word(&"STOP RUN".to_string()), true);
+}
+
+#[test]
+fn test_simple_sentence_contains_phase() {
+    let parser = Parser::new(
+        "COMPUTER".to_string(),
+        "STOP".to_string(),
+        vec!["AAA".to_string(), "BB".to_string()],
+    );
+    assert_eq!(
+        parser.sentence_contains_phase(&"AAA".to_string()),
+        Some("AAA".to_string())
+    );
+    assert_eq!(parser.sentence_contains_phase(&"AA".to_string()), None);
+    assert_eq!(parser.sentence_contains_phase(&"BBB".to_string()), None);
+    assert_eq!(
+        parser.sentence_contains_phase(&"BB BBB".to_string()),
+        Some("BB".to_string())
+    );
+}
+
+#[test]
+fn test_complex_sentence_contains_phase() {
+    let parser = Parser::new(
+        "COMPUTER".to_string(),
+        "STOP".to_string(),
+        vec!["AAA".to_string(), "EEE FFF".to_string()],
+    );
+    assert_eq!(
+        parser.sentence_contains_phase(&"AA BB CC".to_string()),
+        None
+    );
+    assert_eq!(
+        parser.sentence_contains_phase(&"EEE er FFF".to_string()),
+        Some("EEE FFF".to_string())
+    );
+
+    assert_eq!(
+        parser.sentence_contains_phase(&"AA EEE erDD FFF DD".to_string()),
+        Some("EEE FFF".to_string())
+    );
+    assert_eq!(parser.sentence_contains_phase(&"EEEFFFF".to_string()), None);
+    assert_eq!(
+        parser.sentence_contains_phase(&"FFF er EEE".to_string()),
+        None
+    );
 }
