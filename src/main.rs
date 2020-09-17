@@ -63,8 +63,8 @@ fn parse_config(
 
 fn main() {
     let mut args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        panic!("SAI has to have config file...");
+    if args.len() != 3 {
+        panic!("SAI run: SAI [julius config file] [SAI config file]");
     }
 
     let ((invoking_word, sleep_word), (phases, phases_and_commands)) =
@@ -74,7 +74,7 @@ fn main() {
     let (worker_sender, worker_reciever) = sync::mpsc::channel();
     let parser = Parser::new(invoking_word, sleep_word, phases);
 
-    julius::listen_and_send(julius_sender, "j_polski.jconf".to_string());
+    julius::listen_and_send(julius_sender, args.pop().unwrap());
     worker::listen_and_do(worker_reciever, phases_and_commands);
     parser.parse_commands(julius_receiver, worker_sender);
 }

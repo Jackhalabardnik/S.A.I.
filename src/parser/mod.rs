@@ -4,6 +4,7 @@ pub struct Parser {
     invoking_word: String,
     sleep_word: String,
     phases: Vec<String>,
+    quit_word: String,
 }
 
 impl Parser {
@@ -12,6 +13,7 @@ impl Parser {
             invoking_word: invoking_word,
             sleep_word: sleep_word,
             phases: phases,
+            quit_word: "00000".to_string(),
         }
     }
 
@@ -35,6 +37,10 @@ impl Parser {
                 Err(_) => {
                     is_new_command = false;
                 }
+            }
+
+            if self.contains_quit_message(&command) {
+                panic!("Julius needs proper config file");
             }
 
             if is_active {
@@ -80,6 +86,13 @@ impl Parser {
 
     fn contains_sleep_word(&self, word: &String) -> bool {
         word.contains(self.sleep_word.as_str())
+    }
+
+    fn contains_quit_message(&self, sentence: &String) -> bool {
+        match sentence_has_word(sentence, self.quit_word.clone()) {
+            Some(_) => true,
+            None => false,
+        }
     }
 
     fn sentence_contains_phase(&self, sentence: &String) -> Option<String> {

@@ -72,3 +72,15 @@ fn test_complex_sentence_contains_phase() {
         None
     );
 }
+
+#[test]
+fn test_contains_quit_message() {
+    let parser = Parser::new(
+        "COMPUTER".to_string(),
+        "STOP".to_string(),
+        vec!["AAA".to_string(), "EEE FFF".to_string()],
+    );
+    assert_eq!(parser.contains_quit_message(&"00000".to_string()), true);
+    assert_eq!(parser.contains_quit_message(&"000000".to_string()), false);
+    assert_eq!(parser.contains_quit_message(&"asd".to_string()), false);
+}

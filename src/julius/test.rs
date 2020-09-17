@@ -68,3 +68,17 @@ fn test_trim_julius_debug_only_silent() {
         "".to_string()
     );
 }
+
+#[test]
+fn test_contains_julius_critical_error() {
+    assert_eq!(
+        contains_julius_critical_error(
+            &"ERROR: m_jconf: failed to open jconf file: asd".to_string()
+        ),
+        true
+    );
+    assert_eq!(
+        contains_julius_critical_error(&"ERROR: nope".to_string()),
+        false
+    );
+}
