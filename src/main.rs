@@ -75,7 +75,7 @@ fn main() {
     let parser = Parser::new(invoking_word, sleep_word, phases);
 
     julius::listen_and_send(julius_sender, "j_polski.jconf".to_string());
-    worker::listen_and_do(worker_reciever);
+    worker::listen_and_do(worker_reciever, phases_and_commands);
     parser.parse_commands(julius_receiver, worker_sender);
 }
 
