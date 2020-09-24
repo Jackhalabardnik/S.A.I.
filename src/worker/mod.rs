@@ -8,7 +8,6 @@ pub fn listen_and_do(receiver: sync::mpsc::Receiver<String>, commands: HashMap<S
     thread::spawn(move || loop {
         match receiver.recv() {
             Ok(result) => {
-                println!("{}", &result);
                 execute_command(commands.get(&result).unwrap().to_string());
             }
             Err(_) => {}

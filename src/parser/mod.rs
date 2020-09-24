@@ -1,16 +1,16 @@
 use std::sync;
 
 pub struct Parser {
-    invoking_word: String,
+    wakeup_word_word: String,
     sleep_word: String,
     phases: Vec<String>,
     quit_word: String,
 }
 
 impl Parser {
-    pub fn new(invoking_word: String, sleep_word: String, phases: Vec<String>) -> Parser {
+    pub fn new(wakeup_word_word: String, sleep_word: String, phases: Vec<String>) -> Parser {
         Parser {
-            invoking_word: invoking_word,
+            wakeup_word_word: wakeup_word_word,
             sleep_word: sleep_word,
             phases: phases,
             quit_word: "00000".to_string(),
@@ -45,43 +45,34 @@ impl Parser {
 
             if is_active {
                 if is_new_command {
-                    if self.contains_invoking_word(&command) {
+                    if self.contains_wakeup_word_word(&command) {
                         time = std::time::Instant::now();
-                        println!("SAI hears you");
                     } else if self.contains_sleep_word(&command) {
                         is_active = false;
-                        println!("SAI falls asleep...");
+                        command_output.send(self.sleep_word.clone()).unwrap();
                     } else {
                         match self.sentence_contains_phase(&command) {
-                            Some(phase) => match command_output.send(phase) {
-                                Err(problem) => {
-                                    println!("{}", problem);
-                                }
-                                Ok(_) => {
-                                    println!("SAI got command");
-                                    time = std::time::Instant::now();
-                                }
-                            },
+                            Some(phase) => command_output.send(phase).unwrap(),
                             None => {}
                         }
                     }
                 }
                 if time.elapsed() > standard_duration {
                     is_active = false;
-                    println!("SAI falls asleep...");
+                    command_output.send(self.sleep_word.clone()).unwrap();
                 }
             } else if is_new_command {
-                if self.contains_invoking_word(&command) {
+                if self.contains_wakeup_word_word(&command) {
                     is_active = true;
-                    println!("SAI is active!");
+                    command_output.send(self.wakeup_word_word.clone()).unwrap();
                     time = std::time::Instant::now();
                 }
             }
         }
     }
 
-    fn contains_invoking_word(&self, word: &String) -> bool {
-        word.contains(self.invoking_word.as_str())
+    fn contains_wakeup_word_word(&self, word: &String) -> bool {
+        word.contains(self.wakeup_word_word.as_str())
     }
 
     fn contains_sleep_word(&self, word: &String) -> bool {

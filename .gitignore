@@ -7,4 +7,9 @@
 /polski/
 j_polski.jconf
 
+/english_lm/
+english_lm.jconf
+
+/voice/
+
 sai_config

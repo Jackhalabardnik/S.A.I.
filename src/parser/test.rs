@@ -1,16 +1,16 @@
 use super::*;
 
 #[test]
-fn test_contains_invoking_word() {
+fn test_contains_wakeup_word_word() {
     let parser = Parser::new(
         "COMPUTER".to_string(),
         "STOP".to_string(),
         vec!["A".to_string()],
     );
-    assert_eq!(parser.contains_invoking_word(&"WORD".to_string()), false);
-    assert_eq!(parser.contains_invoking_word(&"COMPUTER".to_string()), true);
+    assert_eq!(parser.contains_wakeup_word_word(&"WORD".to_string()), false);
+    assert_eq!(parser.contains_wakeup_word_word(&"COMPUTER".to_string()), true);
     assert_eq!(
-        parser.contains_invoking_word(&"COMPUTER RUN".to_string()),
+        parser.contains_wakeup_word_word(&"COMPUTER RUN".to_string()),
         true
     );
 }

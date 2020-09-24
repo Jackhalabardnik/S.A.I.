@@ -9,17 +9,13 @@ mod worker;
 
 use parser::Parser;
 
-fn get_control_words(string: String) -> (String, String) {
-    let words: Vec<&str> = string.split(";").collect();
-    let invoke_word = words.get(0).expect("Cant get invoking word").to_string();
-    let stop_word = words.get(1).expect("Cant get sleep word").to_string();
-    if invoke_word.len() == 0 {
-        panic!("Invoking word cannot be empty!");
+fn get_control_phases(mut phases: Vec<String>) -> (String, String, Vec<String>) {
+    if phases.len() <= 2 {
+        panic!("SAI config has to contain control words");
     }
-    if stop_word.len() == 0 {
-        panic!("Stop word cannot be empty!");
-    }
-    (invoke_word, stop_word)
+    let wakeup_word = phases.remove(0);
+    let sleep_word = phases.remove(0);
+    (wakeup_word, sleep_word, phases)
 }
 
 fn get_command_collections(lines: std::str::Lines) -> (Vec<String>, HashMap<String, String>) {
@@ -50,15 +46,10 @@ fn read_config_file(filename: String) -> String {
     String::from_utf8_lossy(&file_content).to_string()
 }
 
-fn parse_config(
-    file_content: String,
-) -> ((String, String), (Vec<String>, HashMap<String, String>)) {
-    let mut lines = file_content.lines();
-    let control_words = lines.next().unwrap().to_string();
-    (
-        get_control_words(control_words),
-        get_command_collections(lines),
-    )
+fn parse_config(file_content: String) -> ((String, String, Vec<String>), HashMap<String, String>) {
+    let lines = file_content.lines();
+    let (all_phases, phases_and_commands) = get_command_collections(lines);
+    (get_control_phases(all_phases), phases_and_commands)
 }
 
 fn main() {
@@ -67,12 +58,12 @@ fn main() {
         panic!("SAI run: SAI [julius config file] [SAI config file]");
     }
 
-    let ((invoking_word, sleep_word), (phases, phases_and_commands)) =
+    let ((wakeup_word, sleep_word, phases), phases_and_commands) =
         parse_config(read_config_file(args.pop().unwrap()));
 
     let (julius_sender, julius_receiver) = sync::mpsc::channel();
     let (worker_sender, worker_reciever) = sync::mpsc::channel();
-    let parser = Parser::new(invoking_word, sleep_word, phases);
+    let parser = Parser::new(wakeup_word, sleep_word, phases);
 
     julius::listen_and_send(julius_sender, args.pop().unwrap());
     worker::listen_and_do(worker_reciever, phases_and_commands);
