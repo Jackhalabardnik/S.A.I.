@@ -52,6 +52,24 @@ UP              ah p
 
 DOWN              d aw n
 
+%V_FULL
+
+<s>                 sil
+
+FULL                f uh l
+
+%V_TIME
+
+<s> sil
+
+TIME               t ay m
+
+%V_DATE
+
+<s> sil
+
+DATE                d ey t
+
 %EXIT
 
 EXIT              eh g z ih t

@@ -52,7 +52,10 @@ impl Parser {
                         command_output.send(self.sleep_word.clone()).unwrap();
                     } else {
                         match self.sentence_contains_phase(&command) {
-                            Some(phase) => command_output.send(phase).unwrap(),
+                            Some(phase) => {
+                                command_output.send(phase).unwrap();
+                                time = std::time::Instant::now();
+                            }
                             None => {}
                         }
                     }

@@ -8,7 +8,10 @@ fn test_contains_wakeup_word_word() {
         vec!["A".to_string()],
     );
     assert_eq!(parser.contains_wakeup_word_word(&"WORD".to_string()), false);
-    assert_eq!(parser.contains_wakeup_word_word(&"COMPUTER".to_string()), true);
+    assert_eq!(
+        parser.contains_wakeup_word_word(&"COMPUTER".to_string()),
+        true
+    );
     assert_eq!(
         parser.contains_wakeup_word_word(&"COMPUTER RUN".to_string()),
         true
