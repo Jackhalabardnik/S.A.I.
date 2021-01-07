@@ -36,10 +36,21 @@ fn split_command_into_parts(command: &String) -> Vec<String> {
             splitted_command[i] = splitted_command[i].trim_start_matches("\" ").to_string();
             splitted_command[i] = splitted_command[i].trim_end_matches(" \"").to_string();
 
-            let single_command_parts = splitted_command[i].split_whitespace();
 
-            for single_command_part in single_command_parts {
-                command_parts.push(single_command_part.to_string());
+            let mut quotes_splitted_command = split_at_char_and_append_it(&splitted_command[i], '"');
+
+            for i in 0..quotes_splitted_command.len() {
+                if i % 2 == 0 {
+                    quotes_splitted_command[i] = quotes_splitted_command[i].trim().to_string();
+                    let single_command_parts = quotes_splitted_command[i].split_whitespace();
+
+                    for single_command_part in single_command_parts {
+                        command_parts.push(single_command_part.to_string());
+                    }
+                }
+                else {
+                    command_parts.push(quotes_splitted_command[i].clone());
+                }
             }
         } else {
             splitted_command[i].insert(0, '\"');
