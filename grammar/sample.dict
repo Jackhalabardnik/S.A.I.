@@ -1,27 +1,44 @@
 0	[<s>]	sil
 1	[</s>]	sil
-2	[COMPUTER]	k ah m p y uw t er
 2	[STOP]	s t aa p
 2	[<s>]	sil
-3	[RUN]	r ah n
-3	[OPEN]	ow p ah n
+3	[COMPUTER]	k ah m p y uw t er
 3	[<s>]	sil
-4	[FIREFOX]	f ay er f aa k s
+4	[RUN]	r ah n
+4	[OPEN]	ow p ah n
 4	[<s>]	sil
-5	[FILE]	f ay l
+5	[FIREFOX]	f ay er f aa k s
 5	[<s>]	sil
-6	[MANAGER]	m ae n ah jh er
+6	[FILE]	f ay l
 6	[<s>]	sil
-7	[VOLUME]	v aa l y uw m
+7	[MANAGER]	m ae n ah jh er
 7	[<s>]	sil
+8	[VOLUME]	v aa l y uw m
 8	[<s>]	sil
-8	[UP]	ah p
-8	[DOWN]	d aw n
 9	[<s>]	sil
-9	[FULL]	f uh l
+9	[UP]	ah p
+9	[DOWN]	d aw n
 10	[<s>]	sil
-10	[TIME]	t ay m
+10	[FULL]	f uh l
 11	[<s>]	sil
-11	[DATE]	d ey t
-12	[EXIT]	eh g z ih t
+11	[TIME]	t ay m
 12	[<s>]	sil
+12	[DATE]	d ey t
+13	[EXIT]	eh g z ih t
+13	[<s>]	sil
+14	[FIRST]	f er s t
+14	[<s>]	sil
+15	[SECOND]	s eh k ah n d
+15	[<s>]	sil
+16	[LIGHT]	l ay t
+16	[<s>]	sil
+17	[MY]	m ay
+17	[<s>]	sil
+18	[DEAR]	d ih r
+18	[<s>]	sil
+19	[TURN]	t er n
+19	[<s>]	sil
+20	[TELL]	t eh l
+20	[<s>]	sil
+21	[BOTH]	b ow th
+21	[<s>]	sil

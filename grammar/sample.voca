@@ -4,11 +4,15 @@
 % NS_E
 </s>             sil
 
-% ACTIVATE
-
-COMPUTER         k ah m p y uw t er
+% STOP
 
 STOP             s t aa p
+
+<s>              sil
+
+% COMPUTER
+
+COMPUTER         k ah m p y uw t er
 
 <s>              sil
 
@@ -54,9 +58,9 @@ DOWN              d aw n
 
 %V_FULL
 
-<s>                 sil
+<s>              sil
 
-FULL                f uh l
+FULL            f uh l
 
 %V_TIME
 
@@ -73,5 +77,53 @@ DATE                d ey t
 %EXIT
 
 EXIT              eh g z ih t
+
+<s>              sil
+
+%FIRST
+
+FIRST               f er s t
+
+<s>              sil
+
+%SECOND
+
+SECOND              s eh k ah n d
+
+<s>              sil
+
+%LIGHT
+
+LIGHT               l ay t
+
+<s>              sil
+
+%MY
+
+MY                  m ay
+
+<s>              sil
+
+%DEAR
+
+DEAR                d ih r
+
+<s>              sil
+
+%TURN
+
+TURN            t er n
+
+<s>              sil
+
+%TELL
+
+TELL            t eh l
+
+<s>              sil
+
+%BOTH
+
+BOTH            b ow th
 
 <s>              sil
